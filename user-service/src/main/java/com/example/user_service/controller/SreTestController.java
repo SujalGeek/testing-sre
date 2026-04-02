@@ -24,9 +24,15 @@ public class SreTestController {
         // Humne error counter badha diya
         errorCounter.increment();
         
-        // Asli error trigger kar rahe hain
-        int result = 10 / 0; 
-        return "Result: " + result;
+        // Asli error trigger kar rahe hain, lekin ab use gracefully handle karenge
+        try {
+            int result = 10 / 0; 
+            return "Result: " + result; // Ye line kabhi execute nahi hogi
+        } catch (ArithmeticException e) {
+            // Error ko catch karke ek user-friendly message return kar rahe hain
+            // Taki application crash na ho aur SRE test ke liye proper response mile
+            return "Error: Cannot divide by zero. Original message: " + e.getMessage();
+        }
     }
     
     
