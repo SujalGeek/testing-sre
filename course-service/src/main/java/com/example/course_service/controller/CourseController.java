@@ -3,6 +3,7 @@ package com.example.course_service.controller;
 import java.io.IOException;  
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -123,10 +124,19 @@ public class CourseController {
     
     @PutMapping("/{courseId}/assign/{teacherId}")
     public ResponseEntity<?> assignTeacher(@PathVariable Long courseId, @PathVariable Long teacherId) {
-        Course course = courseRepository.findById(courseId).orElseThrow();
-        course.setTeacherId(teacherId); 
-        courseRepository.save(course);
-        return ResponseEntity.ok("Instruction path assigned.");
+        // The original code used orElseThrow() which would result in a NoSuchElementException (500 Internal Server Error)
+        // if the course was not found. This has been improved to return a 404 Not Found.
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            course.setTeacherId(teacherId); 
+            courseRepository.save(course);
+            return ResponseEntity.ok("Instruction path assigned.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Course with ID " + courseId + " not found."));
+        }
     }
     
  // 🔥 Delete Course (Admin Only)
