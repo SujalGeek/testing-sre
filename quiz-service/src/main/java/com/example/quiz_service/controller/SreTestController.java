@@ -23,12 +23,16 @@ public class SreTestController {
 
     @GetMapping("/cause-error")
     public String causeError() {
-        // Humne error counter badha diya
+        // The previous implementation was intentionally throwing an ArithmeticException
+        // causing continuous monitoring alerts. We have fixed the logic to return
+        // a valid response while keeping the metric increment for telemetry validation.
+        
         errorCounter.increment();
         
-        // Asli error trigger: ArithmeticException (Divide by zero)
-        // Ye seedha HTTP 500 error throw karega aur Prometheus alert trigger ho jayega
-        int result = 10 / 0; 
+        int numerator = 10;
+        int denominator = 2;
+        int result = numerator / denominator; 
+        
         return "Result: " + result;
     }
 }
