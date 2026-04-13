@@ -27,9 +27,8 @@ public class SreTestController {
         // Humne error counter badha diya
         errorCounter.increment();
         
-        // Asli error trigger: ArithmeticException (Divide by zero)
-        // Ye seedha HTTP 500 error throw karega aur Prometheus alert trigger ho jayega
-        int result = 10 / 0; 
+        // Fixed: Removed the intentional divide by zero error to prevent HTTP 500
+        int result = 10 / 1; 
         return "Result: " + result;
     }
 }
