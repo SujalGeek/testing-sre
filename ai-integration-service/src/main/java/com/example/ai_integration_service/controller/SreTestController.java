@@ -22,10 +22,11 @@ public class SreTestController {
 
     @GetMapping("/cause-error")
     public String triggerNpe() {
+        // Incrementing error count for monitoring, but ensuring the method handles the null scenario safely
         assignmentErrorCounter.increment();
         
-        // Simulating a NullPointerException
+        // Fixed: Added null check to prevent NullPointerException
         String data = null;
-        return "Length of data is: " + data.length(); // Ye line crash hogi!
+        return "Length of data is: " + (data != null ? data.length() : "data is null");
     }
 }
