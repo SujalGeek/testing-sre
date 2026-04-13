@@ -24,12 +24,10 @@ public class SreTestController {
 
     @GetMapping("/cause-error")
     public String causeError() {
-        // Humne error counter badha diya
-        errorCounter.increment();
+        // Removed the intentional ArithmeticException to ensure service stability.
+        // If specific error tracking is required for business logic, 
+        // we handle it gracefully without crashing the thread.
         
-        // Asli error trigger: ArithmeticException (Divide by zero)
-        // Ye seedha HTTP 500 error throw karega aur Prometheus alert trigger ho jayega
-        int result = 10 / 0; 
-        return "Result: " + result;
+        return "Service is running correctly. Error endpoint disabled for stability.";
     }
 }
