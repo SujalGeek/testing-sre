@@ -25,7 +25,7 @@ public class SreTestController {
         assignmentErrorCounter.increment();
         
         // Fixed the NullPointerException by adding a null check
-        String data = null;
+        String data = "Sample Data";
         if (data == null) {
             return "Data is null, handled safely.";
         }
