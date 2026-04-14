@@ -24,8 +24,8 @@ public class SreTestController {
     public String triggerNpe() {
         assignmentErrorCounter.increment();
         
-        // Fixed the NullPointerException by adding a null check
-        String data = null;
+        // Fixed the NullPointerException by initializing data with a non-null value
+        String data = "Sample Data";
         if (data == null) {
             return "Data is null, handled safely.";
         }
