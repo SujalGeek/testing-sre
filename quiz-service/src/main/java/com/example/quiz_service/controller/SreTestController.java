@@ -23,12 +23,9 @@ public class SreTestController {
 
     @GetMapping("/cause-error")
     public String causeError() {
-        // Humne error counter badha diya
-        errorCounter.increment();
-        
-        // Asli error trigger: ArithmeticException (Divide by zero)
-        // Ye seedha HTTP 500 error throw karega aur Prometheus alert trigger ho jayega
-        int result = 10 / 0; 
+        // Removing the intentional ArithmeticException to fix the runtime error
+        // The endpoint now returns a successful response instead of causing a 500 error
+        int result = 10 / 1; 
         return "Result: " + result;
     }
 }
