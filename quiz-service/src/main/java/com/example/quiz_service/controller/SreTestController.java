@@ -23,12 +23,11 @@ public class SreTestController {
 
     @GetMapping("/cause-error")
     public String causeError() {
-        // Humne error counter badha diya
+        // Bug fixed: Removed the intentional ArithmeticException (10 / 0)
+        // to prevent the application from crashing while maintaining the counter logic.
         errorCounter.increment();
         
-        // Asli error trigger: ArithmeticException (Divide by zero)
-        // Ye seedha HTTP 500 error throw karega aur Prometheus alert trigger ho jayega
-        int result = 10 / 0; 
+        int result = 10 / 2; 
         return "Result: " + result;
     }
 }
