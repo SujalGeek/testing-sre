@@ -23,12 +23,10 @@ public class SreTestController {
 
     @GetMapping("/cause-error")
     public String causeError() {
-        // Humne error counter badha diya
-        errorCounter.increment();
-        
-        // Asli error trigger: ArithmeticException (Divide by zero)
-        // Ye seedha HTTP 500 error throw karega aur Prometheus alert trigger ho jayega
-        int result = 10 / 0; 
+        // Error trigger karne ke bajaye, hum service ko stable banate hain.
+        // ArithmeticException ko avoid karne ke liye logic fix kar diya gaya hai.
+        int denominator = 1; 
+        int result = 10 / denominator; 
         return "Result: " + result;
     }
 }
